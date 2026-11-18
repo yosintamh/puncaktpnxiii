@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Puncak Temu Pendidik Nusantara XIII</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px 16px 40px;
+      background: #FFF3E0;
+      color: #263238;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h1 {
+      margin: 0 0 7px;
+      font-size: 25px;
+    }
+
+    .subtitle {
+      color: #77828a;
+      font-size: 13px;
+      margin-bottom: 23px;
+    }
+
+    /* Menu kategori */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-bottom: 12px;
+      margin-bottom: 22px;
+    }
+
+    .tab {
+      white-space: nowrap;
+      border: 1px solid #dce2e6;
+      background: white;
+      color: #43515a;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: #244f70;
+      border-color: #244f70;
+      color: white;
+    }
+
+    .session {
+      margin-bottom: 27px;
+    }
+
+    .session-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .class-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .class-card {
+      background: white;
+      border: 1px solid #e3e7ea;
+      border-radius: 11px;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .class-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Label jenis kelas */
+    .type-label {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .4px;
+      margin-bottom: 8px;
+      padding: 5px 8px;
+      border-radius: 5px;
+    }
+
+    /* Warna berbeda untuk setiap jenis kelas */
+    .type-color-0 {
+      color: #245B8F;
+      background: #E4F0FC;
+    }
+
+    .type-color-1 {
+      color: #8054A0;
+      background: #F2EAFA;
+    }
+
+    .type-color-2 {
+      color: #237442;
+      background: #E2F5E9;
+    }
+
+    .type-color-3 {
+      color: #A96300;
+      background: #FFF0D6;
+    }
+
+    .type-color-4 {
+      color: #B3261E;
+      background: #FDE5E5;
+    }
+
+    .type-color-5 {
+      color: #007C83;
+      background: #DDF4F2;
+    }
+
+    .type-color-6 {
+      color: #8A4F2D;
+      background: #F8E9DF;
+    }
+
+    .type-color-7 {
+      color: #5D5AA8;
+      background: #EBEAFE;
+    }
+
+    .type-color-8 {
+      color: #A33F72;
+      background: #F9E5F0;
+    }
+
+    .type-color-9 {
+      color: #536B24;
+      background: #EDF3DB;
+    }
+
+    .class-title {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 7px;
+      overflow-wrap: anywhere;
+    }
+
+    .speaker {
+      font-size: 12px;
+      color: #596770;
+      margin-bottom: 7px;
+      line-height: 1.4;
+    }
+
+    .class-right {
+      width: 88px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .quota-number {
+      font-size: 29px;
+      font-weight: 700;
+      line-height: 1;
+      background: transparent;
+      padding: 0;
+      border: none;
+    }
+
+    .quota-number.available {
+      color: #237442;
+    }
+
+    .quota-number.almost-full {
+      color: #a96300;
+    }
+
+    .quota-number.full {
+      color: #b3261e;
+    }
+
+    .quota-number.unknown {
+      color: #58656d;
+    }
+
+    .quota-label {
+      display: block;
+      color: #7a858c;
+      font-size: 10px;
+      background: transparent;
+      padding: 0;
+      border: none;
+      margin: 0;
+    }
+
+    .status {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 5px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      margin-top: 3px;
+    }
+
+    .available {
+      color: #237442;
+      background: #e2f5e9;
+    }
+
+    .almost-full {
+      color: #a96300;
+      background: #fff0d6;
+    }
+
+    .full {
+      color: #b3261e;
+      background: #fde5e5;
+    }
+
+    .unknown {
+      color: #58656d;
+      background: #edf0f2;
+    }
+
+    .last-update {
+      font-size: 10px;
+      color: #929ba1;
+      margin-top: 5px;
+      line-height: 1.3;
+    }
+
+    .message {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      color: #77828a;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #929ba1;
+      font-size: 11px;
+    }
+
+    @media (max-width: 650px) {
+      body {
+        padding: 19px 12px 30px;
+      }
+
+      h1 {
+        font-size: 21px;
+      }
+
+      /* Menu kategori menjadi dua kolom di HP */
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        width: 100%;
+      }
+
+      .tab {
+        width: 100%;
+        white-space: normal;
+        min-height: 42px;
+        padding: 10px 8px;
+        text-align: center;
+        line-height: 1.3;
+      }
+
+      .class-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .class-card {
+        padding: 14px;
+        gap: 8px;
+      }
+
+      .class-title {
+        font-size: 14px;
+      }
+
+      .class-right {
+        width: 78px;
+      }
+
+      .quota-number {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <h1>Informasi Kelas Puncak TPN XIII</h1>
+    <div class="subtitle">
+      Refresh untuk mendapat data terbaru.
+    </div>
+
+    <div id="tabs" class="tabs"></div>
+
+    <div id="content">
+      <div class="message">Memuat informasi kelas...</div>
+    </div>
+
+    <div class="footer">
+      Follow Instagram @temupendidiknusantara.
+    </div>
+
+  </div>
+
+  <script>
+    let allClasses = [];
+    let selectedCategory = '';
+    let lastUpdateTimes = new Map();
+    let jenisColorMap = new Map();
+
+    function escapeHTML(value) {
+      return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[char]);
+    }
+
+    function loadDashboard() {
+      google.script.run
+        .withSuccessHandler(data => {
+          if (!data || !Array.isArray(data.classes)) {
+            showMessage('Data tidak dapat dibaca.');
+            return;
+          }
+
+          allClasses = data.classes;
+
+          // Membuat pemetaan warna untuk setiap jenis kelas.
+          const jenisList = [
+            ...new Set(
+              allClasses
+                .map(item => String(item.jenis_kelas || '').trim())
+                .filter(Boolean)
+            )
+          ].sort((a, b) => a.localeCompare(b));
+
+          jenisColorMap = new Map(
+            jenisList.map((jenis, index) => [
+              jenis,
+              index % 10
+            ])
+          );
+
+          renderTabs();
+          renderClasses();
+        })
+        .withFailureHandler(error => {
+          showMessage('Gagal mengambil data. ' + error.message);
+        })
+        .getDashboardData();
+    }
+
+    function renderTabs() {
+      const categories = [
+        ...new Set(
+          allClasses
+            .map(item => String(item.kategori || '').trim())
+            .filter(Boolean)
+        )
+      ];
+
+      if (!categories.includes(selectedCategory)) {
+        selectedCategory = categories[0] || '';
+      }
+
+      document.getElementById('tabs').innerHTML =
+        categories.map((category, index) => `
+          <button
+            class="tab ${category === selectedCategory ? 'active' : ''}"
+            data-index="${index}"
+            onclick="selectCategory(this)">
+            ${escapeHTML(category)}
+          </button>
+        `).join('');
+    }
+
+    function selectCategory(button) {
+      const categories = [
+        ...new Set(
+          allClasses
+            .map(item => String(item.kategori || '').trim())
+            .filter(Boolean)
+        )
+      ];
+
+      selectedCategory = categories[Number(button.dataset.index)] || '';
+      renderTabs();
+      renderClasses();
+    }
+
+    function renderClasses() {
+      const content = document.getElementById('content');
+
+      if (!allClasses.length) {
+        showMessage('Tidak ada kelas yang perlu ditampilkan.');
+        return;
+      }
+
+      const filtered = allClasses.filter(item =>
+        String(item.kategori || '').trim() === selectedCategory
+      );
+
+      if (!filtered.length) {
+        showMessage('Belum ada kelas di lokasi ini.');
+        return;
+      }
+
+      const sessions = [
+        ...new Set(filtered.map(item => item.sesi || 'Sesi lainnya'))
+      ];
+
+      content.innerHTML = sessions.map(session => {
+        const classes = filtered.filter(item =>
+          (item.sesi || 'Sesi lainnya') === session
+        );
+
+        return `
+          <section class="session">
+            <div class="session-title">
+              ${escapeHTML(session)}
+            </div>
+            <div class="class-grid">
+              ${classes.map(createCard).join('')}
+            </div>
+          </section>
+        `;
+      }).join('');
+    }
+
+    function createCard(item) {
+      const status = String(item.status || '').trim();
+      const normalized = status.toLowerCase();
+
+      let statusClass = 'unknown';
+
+      if (normalized === 'tersedia') {
+        statusClass = 'available';
+      } else if (normalized === 'hampir penuh') {
+        statusClass = 'almost-full';
+      } else if (normalized === 'penuh') {
+        statusClass = 'full';
+      }
+
+      const jenis = String(item.jenis_kelas || '').trim();
+      const jenisColor = jenisColorMap.get(jenis) ?? 0;
+
+      const updateKey = String(item.kategori) + '|' +
+        String(item.judul_kelas) + '|' +
+        String(item.sesi);
+
+      if (item.last_update) {
+        lastUpdateTimes.set(updateKey, Number(item.last_update));
+      }
+
+      const lastUpdate = lastUpdateTimes.get(updateKey);
+
+      return `
+        <div class="class-card">
+          <div class="class-info">
+
+            <div class="type-label type-color-${jenisColor}">
+              ${escapeHTML(jenis)}
+            </div>
+
+            <div class="class-title">
+              ${escapeHTML(item.ruang)} – ${escapeHTML(item.judul_kelas)} (${escapeHTML(item.waktu)} WIB)
+            </div>
+
+            <div class="speaker">
+              ${escapeHTML(item.pembicara)}
+            </div>
+
+            <div class="last-update"
+              data-update="${lastUpdate || ''}">
+              ${formatLastUpdate(lastUpdate)}
+            </div>
+
+          </div>
+
+          <div class="class-right">
+            <div class="quota-number ${statusClass}">
+              ${escapeHTML(item.sisa_kuota)}
+            </div>
+
+            <div class="quota-label">Sisa kuota</div>
+
+            <span class="status ${statusClass}">
+              ${escapeHTML(status || 'Belum diisi')}
+            </span>
+          </div>
+        </div>
+      `;
+    }
+
+    function formatLastUpdate(timestamp) {
+      if (!timestamp) return 'Belum ada pembaruan';
+
+      const minutes = Math.max(
+        0,
+        Math.floor((Date.now() - timestamp) / 60000)
+      );
+
+      if (minutes < 1) return 'Baru saja';
+      if (minutes === 1) return '1 menit lalu';
+
+      if (minutes < 60) {
+        return minutes + ' menit lalu';
+      }
+
+      const hours = Math.floor(minutes / 60);
+
+      if (hours === 1) return '1 jam lalu';
+      if (hours < 24) return hours + ' jam lalu';
+
+      const days = Math.floor(hours / 24);
+
+      if (days === 1) return '1 hari lalu';
+      return days + ' hari lalu';
+    }
+
+    function updateRelativeTimes() {
+      document.querySelectorAll('.last-update').forEach(element => {
+        const timestamp = Number(element.dataset.update);
+
+        if (timestamp) {
+          element.textContent = formatLastUpdate(timestamp);
+        }
+      });
+    }
+
+    function showMessage(message) {
+      document.getElementById('content').innerHTML = `
+        <div class="message">${escapeHTML(message)}</div>
+      `;
+    }
+
+    loadDashboard();
+
+    // Ambil data terbaru setiap 5 detik.
+    setInterval(loadDashboard, 5000);
+
+    // Perbarui tulisan waktu pembaruan setiap 5 detik.
+    setInterval(updateRelativeTimes, 5000);
+  </script>
+</body>
+</html>
